@@ -3,12 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Smoogle</title>
 
 <style>
-
-/* GENERAL */
 
 * {
     box-sizing: border-box;
@@ -19,13 +16,14 @@ body {
     font-family: Arial, sans-serif;
     background: #f5fff5;
     color: #183d22;
+    transition: 0.3s;
 }
-
-/* HEADER */
 
 header {
     padding: 25px;
-    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .logo {
@@ -34,8 +32,6 @@ header {
     color: #269b43;
     text-decoration: none;
 }
-
-/* MAIN CONTENT */
 
 main {
     margin-top: 130px;
@@ -52,10 +48,7 @@ h1 {
 .subtitle {
     color: #63816a;
     margin-bottom: 35px;
-    font-size: 17px;
 }
-
-/* SEARCH BAR */
 
 .search-box {
     display: flex;
@@ -65,12 +58,6 @@ h1 {
     border: 2px solid #b8dfbd;
     border-radius: 30px;
     padding: 8px 15px;
-    transition: 0.2s;
-}
-
-.search-box:focus-within {
-    border-color: #269b43;
-    box-shadow: 0 0 10px #269b4330;
 }
 
 input {
@@ -80,9 +67,9 @@ input {
     font-size: 17px;
     padding: 10px;
     min-width: 0;
+    background: transparent;
+    color: inherit;
 }
-
-/* BUTTONS */
 
 button {
     background: #269b43;
@@ -92,15 +79,11 @@ button {
     border-radius: 25px;
     cursor: pointer;
     font-size: 15px;
-    transition: 0.2s;
 }
 
 button:hover {
     background: #187a32;
-    transform: scale(1.04);
 }
-
-/* SMOOG BUTTON */
 
 .ai-button {
     display: inline-block;
@@ -111,15 +94,17 @@ button:hover {
     border-radius: 25px;
     text-decoration: none;
     font-size: 16px;
-    transition: 0.2s;
 }
 
 .ai-button:hover {
     background: #269b43;
-    transform: scale(1.05);
 }
 
-/* FOOTER */
+#themeToggle {
+    background: #269b43;
+    border-radius: 25px;
+    padding: 12px 18px;
+}
 
 footer {
     position: fixed;
@@ -131,6 +116,46 @@ footer {
     text-align: center;
 }
 
+/* DARK MODE */
+
+body.dark {
+    background: #121b15;
+    color: #e5f5e8;
+}
+
+body.dark h1 {
+    color: #55d477;
+}
+
+body.dark .logo {
+    color: #55d477;
+}
+
+body.dark .subtitle {
+    color: #a0b9a5;
+}
+
+body.dark .search-box {
+    background: #202d24;
+    border-color: #41694b;
+}
+
+body.dark input {
+    color: white;
+}
+
+body.dark input::placeholder {
+    color: #a0b9a5;
+}
+
+body.dark .ai-button {
+    background: #286c3c;
+}
+
+body.dark footer {
+    color: #849989;
+}
+
 </style>
 </head>
 
@@ -138,6 +163,10 @@ footer {
 
 <header>
     <a href="index.html" class="logo">🟢 Smoogle</a>
+
+    <button id="themeToggle" onclick="toggleTheme()">
+        🌙 Dark mode
+    </button>
 </header>
 
 <main>
@@ -147,8 +176,6 @@ footer {
     <p class="subtitle">
         Search smarter. Discover more.
     </p>
-
-    <!-- SEARCH -->
 
     <form action="results.html" method="GET" class="search-box">
 
@@ -165,8 +192,6 @@ footer {
 
     </form>
 
-    <!-- SMOOG AI -->
-
     <a href="smoog.html" class="ai-button">
         ✨ Ask Smoog AI
     </a>
@@ -176,6 +201,33 @@ footer {
 <footer>
     © 2026 Smoogle | Powered by curiosity.
 </footer>
+
+<script>
+
+function toggleTheme() {
+    document.body.classList.toggle("dark");
+
+    const isDark = document.body.classList.contains("dark");
+
+    localStorage.setItem("smoogleTheme", isDark ? "dark" : "light");
+
+    updateButton();
+}
+
+function updateButton() {
+    const isDark = document.body.classList.contains("dark");
+
+    document.getElementById("themeToggle").textContent =
+        isDark ? "☀️ Light mode" : "🌙 Dark mode";
+}
+
+if (localStorage.getItem("smoogleTheme") === "dark") {
+    document.body.classList.add("dark");
+}
+
+updateButton();
+
+</script>
 
 </body>
 </html>
