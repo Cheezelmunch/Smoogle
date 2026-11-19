@@ -4,180 +4,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Search Results - Smoogle</title>
-
-<style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f7fff7;
-    color: #183d22;
-}
-
-header {
-    display: flex;
-    align-items: center;
-    gap: 35px;
-    padding: 22px 6%;
-    border-bottom: 1px solid #dcebdc;
-    background: white;
-}
-
-.logo {
-    font-size: 30px;
-    font-weight: bold;
-    color: #269b43;
-    text-decoration: none;
-}
-
-form {
-    display: flex;
-    width: min(600px, 70%);
-    border: 2px solid #b8dfbd;
-    border-radius: 30px;
-    padding: 6px 10px;
-}
-
-input {
-    flex: 1;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    padding: 10px;
-    min-width: 0;
-}
-
-button {
-    background: #269b43;
-    color: white;
-    border: none;
-    border-radius: 25px;
-    padding: 11px 20px;
-    cursor: pointer;
-    font-size: 15px;
-}
-
-button:hover {
-    background: #187a32;
-}
-
-main {
-    max-width: 750px;
-    margin: 35px 8%;
-}
-
-#query {
-    color: #63816a;
-    font-size: 14px;
-}
-
-.result {
-    margin: 30px 0;
-}
-
-.result a {
-    color: #18843a;
-    font-size: 21px;
-    text-decoration: none;
-}
-
-.result a:hover {
-    text-decoration: underline;
-}
-
-.url {
-    color: #578365;
-    font-size: 13px;
-    margin: 7px 0;
-}
-
-.description {
-    color: #435c48;
-    line-height: 1.5;
-}
-
-#message {
-    color: #63816a;
-    margin-top: 35px;
-}
-
-@media(max-width: 600px) {
-    header {
-        flex-wrap: wrap;
-        gap: 15px;
-    }
-
-    form {
-        width: 100%;
-    }
-
-    main {
-        margin: 25px 6%;
-    }
-}
-</style>
-</head>
-
-<body>
-
-<header>
-    <a href="index.html" class="logo">Smoogle</a>
-
-    <form id="searchForm">
-        <input id="searchInput" name="q" placeholder="Search Smoogle..." required>
-        <button type="submit">Search</button>
-    </form>
-</header>
-
-<main>
-    <p id="query"></p>
-
-    <div id="results"></div>
-
-    <p id="message"></p>
-</main>
-
-<script>
-const params = new URLSearchParams(window.location.search);
-const search = params.get("q") || "";
-
-document.getElementById("searchInput").value = search;
-document.getElementById("query").textContent =
-    search ? 'Search results for "' + search + '"' : "Welcome to Smoogle";
-
-document.getElementById("searchForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const value = document.getElementById("searchInput").value.trim();
-
-    if (value) {
-        window.location.href = "results.html?q=" + encodeURIComponent(value);
-    }
-});
-
-document.getElementById("message").textContent = search
-    ? "Smoogle is ready to search. We're connecting Exa next!"
-    : "Enter something above to get started.";
-</script>
-
-</body>
-</html>
-```
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Smoogle Search</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
@@ -228,24 +58,18 @@ button {
     padding: 11px 20px;
 }
 
-button:hover {
-    background: #187a32;
-}
-
 .tabs {
     display: flex;
     gap: 30px;
     padding: 18px 8%;
     border-bottom: 1px solid #e3eee3;
     background: white;
-    overflow-x: auto;
 }
 
 .tabs a {
     text-decoration: none;
     color: #718575;
     padding-bottom: 8px;
-    white-space: nowrap;
 }
 
 .tabs a.active {
@@ -270,7 +94,6 @@ main {
     border-radius: 16px;
     padding: 22px;
     margin: 25px 0 35px;
-    box-shadow: 0 3px 12px #193d2210;
 }
 
 .smoog-title {
@@ -285,34 +108,8 @@ main {
     color: #526c57;
 }
 
-.result {
-    margin: 30px 0;
-}
-
-.result a {
-    font-size: 21px;
-    color: #18843a;
-    text-decoration: none;
-}
-
-.result a:hover {
-    text-decoration: underline;
-}
-
-.url {
-    color: #63816a;
-    font-size: 13px;
-    margin: 8px 0;
-}
-
-.description {
-    line-height: 1.6;
-    color: #526454;
-}
-
 #message {
     color: #78917c;
-    margin-top: 25px;
 }
 
 @media(max-width: 650px) {
@@ -323,10 +120,6 @@ main {
 
     .search {
         width: 100%;
-    }
-
-    main {
-        margin: 25px 6%;
     }
 }
 </style>
@@ -353,42 +146,30 @@ main {
 </nav>
 
 <main>
-
     <p id="query"></p>
 
     <div class="smoog-card">
         <div class="smoog-title">✦ Smoog AI</div>
-        <div class="smoog-text" id="smoogText">
-            Smoog is getting ready to answer your questions.
-            AI summaries are coming soon.
+        <div class="smoog-text">
+            Smoog AI summaries are coming soon!
         </div>
     </div>
 
-    <div id="results"></div>
-
     <p id="message"></p>
-
 </main>
 
 <script>
-
 const params = new URLSearchParams(window.location.search);
 const search = params.get("q") || "";
 const type = params.get("type") || "all";
 
-const input = document.getElementById("searchInput");
-
-input.value = search;
+document.getElementById("searchInput").value = search;
 
 document.getElementById("query").textContent =
     search ? 'Results for "' + search + '"' : "Welcome to Smoogle";
 
-const tabs = document.querySelectorAll(".tabs a");
-
-tabs.forEach(tab => {
-    const selected = tab.dataset.type === type;
-
-    if (selected) {
+document.querySelectorAll(".tabs a").forEach(tab => {
+    if (tab.dataset.type === type) {
         tab.classList.add("active");
     }
 
@@ -397,10 +178,10 @@ tabs.forEach(tab => {
         "&type=" + tab.dataset.type;
 });
 
-document.getElementById("searchForm").addEventListener("submit", function(e) {
+document.getElementById("searchForm").addEventListener("submit", e => {
     e.preventDefault();
 
-    const value = input.value.trim();
+    const value = document.getElementById("searchInput").value.trim();
 
     if (value) {
         window.location.href =
@@ -409,10 +190,10 @@ document.getElementById("searchForm").addEventListener("submit", function(e) {
 });
 
 document.getElementById("message").textContent = search
-    ? "Smoogle is ready. Real search results are coming with Exa!"
-    : "Enter something above to start searching.";
-
+    ? "Real search results are coming soon with Exa!"
+    : "Enter something above to get started.";
 </script>
 
 </body>
 </html>
+```
