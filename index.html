@@ -2,123 +2,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smoogle</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smoogle</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f5fff5;
-            color: #183d22;
-            text-align: center;
-        }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5fff5;
+    color: #183d22;
+}
 
-        header {
-            padding: 25px;
-            text-align: left;
-        }
+header {
+    padding: 25px;
+    text-align: left;
+}
 
-        .logo {
-            font-size: 30px;
-            font-weight: bold;
-            color: #269b43;
-        }
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+    color: #269b43;
+}
 
-        main {
-            margin-top: 130px;
-            padding: 20px;
-        }
+main {
+    margin-top: 130px;
+    padding: 20px;
+    text-align: center;
+}
 
-        h1 {
-            font-size: 75px;
-            color: #269b43;
-            margin-bottom: 10px;
-        }
+h1 {
+    font-size: 75px;
+    color: #269b43;
+    margin-bottom: 10px;
+}
 
-        .subtitle {
-            color: #63816a;
-            margin-bottom: 35px;
-        }
+.subtitle {
+    color: #63816a;
+    margin-bottom: 35px;
+}
 
-        .search-box {
-            display: flex;
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            border: 2px solid #b8dfbd;
-            border-radius: 30px;
-            padding: 8px 15px;
-        }
+.search-box {
+    display: flex;
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    border: 2px solid #b8dfbd;
+    border-radius: 30px;
+    padding: 8px 15px;
+}
 
-        input {
-            flex: 1;
-            border: none;
-            outline: none;
-            font-size: 17px;
-            padding: 10px;
-        }
+input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 17px;
+    padding: 10px;
+    min-width: 0;
+}
 
-        button {
-            background: #269b43;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 15px;
-        }
+button {
+    background: #269b43;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 15px;
+}
 
-        button:hover {
-            background: #187a32;
-        }
+button:hover {
+    background: #187a32;
+}
 
-        .ai-button {
-            margin-top: 20px;
-            background: #174d2a;
-        }
+.ai-button {
+    margin-top: 20px;
+    background: #174d2a;
+}
 
-        footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            padding: 20px;
-            color: #78917c;
-            font-size: 13px;
-        }
-    </style>
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+    color: #78917c;
+    font-size: 13px;
+    text-align: center;
+}
+</style>
 </head>
 
 <body>
 
-    <header>
-        <div class="logo">Smoogle</div>
-    </header>
+<header>
+    <div class="logo">Smoogle</div>
+</header>
 
-    <main>
-        <h1>Smoogle</h1>
-        <p class="subtitle">Search smarter. Discover more.</p>
+<main>
+    <h1>Smoogle</h1>
+    <p class="subtitle">Search smarter. Discover more.</p>
 
-        <form action="https://www.google.com/search" method="GET" target="_blank" class="search-box">
-            <input type="text" name="q" placeholder="Search the web..." required>
-            <button type="submit">Search</button>
-        </form>
+    <form action="results.html" method="GET" class="search-box">
+        <input type="text" name="q"
+        placeholder="Search the web..." required>
+        <button type="submit">Search</button>
+    </form>
 
-        <button class="ai-button" onclick="alert('Smoog AI is coming soon!')">
-            Ask Smoog AI ✨
-        </button>
-    </main>
+    <button class="ai-button"
+    onclick="alert('Smoog AI is coming soon!')">
+        Ask Smoog AI ✨
+    </button>
+</main>
 
-    <footer>
-        © 2026 Smoogle | Powered by curiosity.
-    </footer>
+<footer>
+    © 2026 Smoogle | Powered by curiosity.
+</footer>
 
 </body>
 </html>
 ```
-
