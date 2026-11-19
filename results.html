@@ -167,3 +167,252 @@ document.getElementById("message").textContent = search
 </body>
 </html>
 ```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smoogle Search</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f8fcf8;
+    color: #203d29;
+}
+
+header {
+    background: white;
+    padding: 20px 5%;
+    display: flex;
+    align-items: center;
+    gap: 35px;
+    border-bottom: 1px solid #e3eee3;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+    color: #269b43;
+    text-decoration: none;
+}
+
+.search {
+    display: flex;
+    width: min(650px, 75%);
+    border: 2px solid #c8e4cc;
+    border-radius: 30px;
+    padding: 6px 10px;
+}
+
+.search input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 10px;
+    font-size: 16px;
+    min-width: 0;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    background: #269b43;
+    color: white;
+    border-radius: 25px;
+    padding: 11px 20px;
+}
+
+button:hover {
+    background: #187a32;
+}
+
+.tabs {
+    display: flex;
+    gap: 30px;
+    padding: 18px 8%;
+    border-bottom: 1px solid #e3eee3;
+    background: white;
+    overflow-x: auto;
+}
+
+.tabs a {
+    text-decoration: none;
+    color: #718575;
+    padding-bottom: 8px;
+    white-space: nowrap;
+}
+
+.tabs a.active {
+    color: #269b43;
+    border-bottom: 3px solid #269b43;
+    font-weight: bold;
+}
+
+main {
+    max-width: 850px;
+    margin: 35px 8%;
+}
+
+#query {
+    color: #718575;
+    font-size: 14px;
+}
+
+.smoog-card {
+    background: white;
+    border: 1px solid #d9ebdc;
+    border-radius: 16px;
+    padding: 22px;
+    margin: 25px 0 35px;
+    box-shadow: 0 3px 12px #193d2210;
+}
+
+.smoog-title {
+    color: #269b43;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.smoog-text {
+    line-height: 1.6;
+    color: #526c57;
+}
+
+.result {
+    margin: 30px 0;
+}
+
+.result a {
+    font-size: 21px;
+    color: #18843a;
+    text-decoration: none;
+}
+
+.result a:hover {
+    text-decoration: underline;
+}
+
+.url {
+    color: #63816a;
+    font-size: 13px;
+    margin: 8px 0;
+}
+
+.description {
+    line-height: 1.6;
+    color: #526454;
+}
+
+#message {
+    color: #78917c;
+    margin-top: 25px;
+}
+
+@media(max-width: 650px) {
+    header {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .search {
+        width: 100%;
+    }
+
+    main {
+        margin: 25px 6%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <a href="index.html" class="logo">Smoogle</a>
+
+    <form class="search" id="searchForm">
+        <input id="searchInput" name="q"
+        placeholder="Search the web..." required>
+        <button type="submit">Search</button>
+    </form>
+</header>
+
+<nav class="tabs">
+    <a href="#" data-type="all">All</a>
+    <a href="#" data-type="images">Images</a>
+    <a href="#" data-type="news">News</a>
+    <a href="#" data-type="videos">Videos</a>
+    <a href="#" data-type="ai">AI</a>
+</nav>
+
+<main>
+
+    <p id="query"></p>
+
+    <div class="smoog-card">
+        <div class="smoog-title">✦ Smoog AI</div>
+        <div class="smoog-text" id="smoogText">
+            Smoog is getting ready to answer your questions.
+            AI summaries are coming soon.
+        </div>
+    </div>
+
+    <div id="results"></div>
+
+    <p id="message"></p>
+
+</main>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+const search = params.get("q") || "";
+const type = params.get("type") || "all";
+
+const input = document.getElementById("searchInput");
+
+input.value = search;
+
+document.getElementById("query").textContent =
+    search ? 'Results for "' + search + '"' : "Welcome to Smoogle";
+
+const tabs = document.querySelectorAll(".tabs a");
+
+tabs.forEach(tab => {
+    const selected = tab.dataset.type === type;
+
+    if (selected) {
+        tab.classList.add("active");
+    }
+
+    tab.href = "results.html?q=" +
+        encodeURIComponent(search) +
+        "&type=" + tab.dataset.type;
+});
+
+document.getElementById("searchForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const value = input.value.trim();
+
+    if (value) {
+        window.location.href =
+            "results.html?q=" + encodeURIComponent(value);
+    }
+});
+
+document.getElementById("message").textContent = search
+    ? "Smoogle is ready. Real search results are coming with Exa!"
+    : "Enter something above to start searching.";
+
+</script>
+
+</body>
+</html>
