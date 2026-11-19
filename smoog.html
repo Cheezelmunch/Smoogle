@@ -1,0 +1,216 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smoog AI</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5fff5;
+    color: #183d22;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background: white;
+    padding: 20px 30px;
+    border-bottom: 1px solid #dcebdc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: bold;
+    color: #269b43;
+    text-decoration: none;
+}
+
+.home {
+    text-decoration: none;
+    color: #269b43;
+    font-size: 14px;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.welcome {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.welcome h1 {
+    font-size: 55px;
+    color: #269b43;
+    margin: 0 0 10px;
+}
+
+.welcome p {
+    color: #718575;
+}
+
+#chat {
+    width: 100%;
+    max-width: 750px;
+    margin-bottom: 20px;
+}
+
+.message {
+    padding: 15px 20px;
+    margin: 12px 0;
+    border-radius: 15px;
+    max-width: 85%;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+.user {
+    background: #269b43;
+    color: white;
+    margin-left: auto;
+}
+
+.bot {
+    background: white;
+    border: 1px solid #dcebdc;
+    color: #34543a;
+}
+
+.input-area {
+    width: 100%;
+    max-width: 750px;
+    background: white;
+    border: 2px solid #b8dfbd;
+    border-radius: 25px;
+    padding: 8px;
+    display: flex;
+    gap: 10px;
+}
+
+input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 12px;
+    font-size: 16px;
+    background: transparent;
+    min-width: 0;
+}
+
+button {
+    border: none;
+    background: #269b43;
+    color: white;
+    border-radius: 20px;
+    padding: 12px 22px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+button:hover {
+    background: #187a32;
+}
+
+footer {
+    text-align: center;
+    color: #91a995;
+    padding: 15px;
+    font-size: 12px;
+}
+
+@media(max-width: 500px) {
+    .welcome h1 {
+        font-size: 42px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <a href="index.html" class="logo">Smoog</a>
+    <a href="index.html" class="home">Back to Smoogle</a>
+</header>
+
+<main>
+
+    <div class="welcome" id="welcome">
+        <h1>Smoog AI</h1>
+        <p>Your AI assistant. Ask me anything.</p>
+    </div>
+
+    <div id="chat"></div>
+
+    <form class="input-area" id="chatForm">
+        <input
+            id="userInput"
+            placeholder="Message Smoog..."
+            autocomplete="off"
+            required
+        >
+        <button type="submit">Send</button>
+    </form>
+
+</main>
+
+<footer>
+    Smoog AI · Part of Smoogle
+</footer>
+
+<script>
+const form = document.getElementById("chatForm");
+const input = document.getElementById("userInput");
+const chat = document.getElementById("chat");
+const welcome = document.getElementById("welcome");
+
+function addMessage(text, type) {
+    const message = document.createElement("div");
+    message.className = "message " + type;
+    message.textContent = text;
+    chat.appendChild(message);
+    message.scrollIntoView({ behavior: "smooth" });
+}
+
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const text = input.value.trim();
+
+    if (!text) return;
+
+    welcome.style.display = "none";
+
+    addMessage(text, "user");
+
+    addMessage(
+        "Hey! I'm Smoog. My AI brain is still being connected, but I'm getting there! 🟢",
+        "bot"
+    );
+
+    input.value = "";
+});
+</script>
+
+</body>
+</html>
+```
