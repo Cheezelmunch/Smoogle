@@ -114,6 +114,11 @@ button:hover {
     background: #187a32;
 }
 
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 #clear {
     background: #777;
 }
@@ -203,16 +208,19 @@ body.dark input::placeholder {
             placeholder="Message Smoog..."
             autocomplete="off"
         >
-        <button type="submit">Send</button>
+        <button id="sendButton" type="submit">Send</button>
     </form>
 
 </main>
 
 <script>
 
+const API_URL = "https://smoog-backend.jasonmsinternet.workers.dev";
+
 const chat = document.getElementById("chat");
 const form = document.getElementById("form");
 const input = document.getElementById("input");
+const sendButton = document.getElementById("sendButton");
 
 let messages = JSON.parse(
     localStorage.getItem("smoogHistory") || "[]"
@@ -233,6 +241,8 @@ function displayMessage(message, sender) {
 
     chat.appendChild(bubble);
     chat.scrollTop = chat.scrollHeight;
+
+    return bubble;
 }
 
 function loadChat() {
@@ -251,12 +261,14 @@ function loadChat() {
     });
 }
 
-form.addEventListener("submit", function(event) {
+form.addEventListener("submit", async function(event) {
     event.preventDefault();
 
     const text = input.value.trim();
 
-    if (!text) return;
+    if (!text || sendButton.disabled) return;
+
+    const previousMessages = messages.slice();
 
     messages.push({
         text: text,
@@ -266,18 +278,75 @@ form.addEventListener("submit", function(event) {
     displayMessage(text, "user");
 
     input.value = "";
+    sendButton.disabled = true;
+    sendButton.textContent = "Thinking...";
 
-    const reply =
-        "I'm still getting my AI brain connected! I'll be able to answer questions properly soon.";
+    const loadingBubble = displayMessage(
+        "Smoog is thinking...",
+        "bot"
+    );
 
-    messages.push({
-        text: reply,
-        sender: "bot"
-    });
+    try {
+        const history = previousMessages
+            .filter(message =>
+                message.sender === "user" ||
+                message.sender === "bot"
+            )
+            .slice(-10)
+            .map(message => ({
+                role: message.sender === "user"
+                    ? "user"
+                    : "assistant",
+                content: message.text
+            }));
 
-    displayMessage(reply, "bot");
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                message: text,
+                history: history
+            })
+        });
 
-    save();
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || "The AI service returned an error.");
+        }
+
+        if (!data.reply) {
+            throw new Error("Smoog returned an empty response.");
+        }
+
+        loadingBubble.textContent = data.reply;
+
+        messages.push({
+            text: data.reply,
+            sender: "bot"
+        });
+
+    } catch (error) {
+        console.error("Smoog error:", error);
+
+        const errorMessage =
+            "Sorry! I couldn't connect to my AI brain. Please try again.";
+
+        loadingBubble.textContent = errorMessage;
+
+        messages.push({
+            text: errorMessage,
+            sender: "bot"
+        });
+
+    } finally {
+        save();
+        sendButton.disabled = false;
+        sendButton.textContent = "Send";
+        input.focus();
+    }
 });
 
 function newChat() {
