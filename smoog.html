@@ -6,15 +6,20 @@
 <title>Smoog AI</title>
 
 <style>
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #f5faf5;
-    color: #222;
+    background: #f5fff5;
+    color: #183d22;
+    transition: 0.3s;
 }
 
 header {
-    background: #168c45;
+    background: #269b43;
     color: white;
     padding: 18px 25px;
     display: flex;
@@ -25,25 +30,39 @@ header {
 header a {
     color: white;
     text-decoration: none;
+    font-weight: bold;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
 }
 
 main {
-    max-width: 750px;
+    max-width: 850px;
     margin: 35px auto;
     padding: 15px;
 }
 
 h1 {
-    color: #168c45;
     text-align: center;
+    color: #269b43;
+}
+
+.subtitle {
+    text-align: center;
+    color: #63816a;
 }
 
 #chat {
     background: white;
-    border-radius: 12px;
+    border-radius: 15px;
     padding: 20px;
-    min-height: 350px;
+    min-height: 400px;
+    max-height: 55vh;
+    overflow-y: auto;
     box-shadow: 0 2px 10px #ddd;
+    margin-top: 25px;
 }
 
 .message {
@@ -73,28 +92,89 @@ form {
 
 input {
     flex: 1;
+    min-width: 0;
     padding: 14px;
-    border: 2px solid #ddd;
-    border-radius: 10px;
+    border: 2px solid #b8dfbd;
+    border-radius: 25px;
     font-size: 16px;
+    background: white;
+    color: #183d22;
 }
 
 button {
-    background: #168c45;
+    background: #269b43;
     color: white;
     border: none;
     padding: 13px 20px;
-    border-radius: 10px;
+    border-radius: 25px;
     cursor: pointer;
 }
 
 button:hover {
-    background: #106b34;
+    background: #187a32;
 }
 
 #clear {
     background: #777;
-    margin-top: 15px;
+}
+
+#clear:hover {
+    background: #555;
+}
+
+/* DARK MODE */
+
+body.dark {
+    background: #121b15;
+    color: #e5f5e8;
+}
+
+body.dark h1 {
+    color: #55d477;
+}
+
+body.dark .subtitle {
+    color: #a0b9a5;
+}
+
+body.dark #chat {
+    background: #202d24;
+    box-shadow: 0 2px 10px #0005;
+}
+
+body.dark .user {
+    background: #285b37;
+    color: white;
+}
+
+body.dark .bot {
+    background: #344239;
+    color: white;
+}
+
+body.dark input {
+    background: #202d24;
+    border-color: #41694b;
+    color: white;
+}
+
+body.dark input::placeholder {
+    color: #a0b9a5;
+}
+
+@media (max-width: 600px) {
+    header {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    main {
+        margin: 15px auto;
+    }
+
+    form {
+        flex-wrap: wrap;
+    }
 }
 </style>
 </head>
@@ -102,39 +182,55 @@ button:hover {
 <body>
 
 <header>
-    <strong>🟢 Smoog</strong>
-    <a href="index.html">Back to Smoogle</a>
+    <a href="index.html">🟢 Smoog</a>
+
+    <div class="header-buttons">
+        <button id="themeToggle" onclick="toggleTheme()">🌙 Dark mode</button>
+        <button id="clear" onclick="newChat()">＋ New Chat</button>
+    </div>
 </header>
 
 <main>
+
     <h1>Smoog AI</h1>
-    <p style="text-align:center;">Your personal AI assistant.</p>
+    <p class="subtitle">Your personal AI assistant.</p>
 
     <div id="chat"></div>
 
     <form id="form">
-        <input id="input" placeholder="Message Smoog..." autocomplete="off">
+        <input
+            id="input"
+            placeholder="Message Smoog..."
+            autocomplete="off"
+        >
         <button type="submit">Send</button>
     </form>
 
-    <button id="clear">Clear chat history</button>
 </main>
 
 <script>
+
 const chat = document.getElementById("chat");
 const form = document.getElementById("form");
 const input = document.getElementById("input");
 
-let messages = JSON.parse(localStorage.getItem("smoogHistory") || "[]");
+let messages = JSON.parse(
+    localStorage.getItem("smoogHistory") || "[]"
+);
 
 function save() {
-    localStorage.setItem("smoogHistory", JSON.stringify(messages));
+    localStorage.setItem(
+        "smoogHistory",
+        JSON.stringify(messages)
+    );
 }
 
 function displayMessage(message, sender) {
     const bubble = document.createElement("div");
+
     bubble.className = "message " + sender;
     bubble.textContent = message;
+
     chat.appendChild(bubble);
     chat.scrollTop = chat.scrollHeight;
 }
@@ -143,7 +239,10 @@ function loadChat() {
     chat.innerHTML = "";
 
     if (messages.length === 0) {
-        displayMessage("Hey! I'm Smoog. What can I help you with?", "bot");
+        displayMessage(
+            "Hey! I'm Smoog. What can I help you with?",
+            "bot"
+        );
         return;
     }
 
@@ -156,6 +255,7 @@ form.addEventListener("submit", function(event) {
     event.preventDefault();
 
     const text = input.value.trim();
+
     if (!text) return;
 
     messages.push({
@@ -164,9 +264,11 @@ form.addEventListener("submit", function(event) {
     });
 
     displayMessage(text, "user");
+
     input.value = "";
 
-    const reply = "I'm still getting my AI brain connected! I'll be able to answer questions properly soon.";
+    const reply =
+        "I'm still getting my AI brain connected! I'll be able to answer questions properly soon.";
 
     messages.push({
         text: reply,
@@ -174,18 +276,49 @@ form.addEventListener("submit", function(event) {
     });
 
     displayMessage(reply, "bot");
+
     save();
 });
 
-document.getElementById("clear").addEventListener("click", function() {
-    if (confirm("Are you sure you want to clear your chat history?")) {
-        messages = [];
-        save();
-        loadChat();
+function newChat() {
+    if (!confirm("Start a new chat? Your previous chat will be cleared.")) {
+        return;
     }
-});
 
+    messages = [];
+    save();
+    loadChat();
+}
+
+/* DARK MODE */
+
+function toggleTheme() {
+    document.body.classList.toggle("dark");
+
+    const dark = document.body.classList.contains("dark");
+
+    localStorage.setItem(
+        "smoogleTheme",
+        dark ? "dark" : "light"
+    );
+
+    updateButton();
+}
+
+function updateButton() {
+    const dark = document.body.classList.contains("dark");
+
+    document.getElementById("themeToggle").textContent =
+        dark ? "☀️ Light mode" : "🌙 Dark mode";
+}
+
+if (localStorage.getItem("smoogleTheme") === "dark") {
+    document.body.classList.add("dark");
+}
+
+updateButton();
 loadChat();
+
 </script>
 
 </body>
